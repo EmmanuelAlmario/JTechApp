@@ -1,0 +1,97 @@
+@startuml casos_de_uso_jtech
+title Casos de Uso - JTech Ecommerce
+
+left to right direction
+skinparam actorStyle awesome
+
+actor "Cliente" as C
+actor "Administrador" as A
+
+rectangle "JTech - Sistema de Ecommerce" {
+
+  package "Módulo Catálogo" {
+    usecase "CU01 - Ver catálogo" as CU01
+    usecase "CU02 - Buscar producto" as CU02
+    usecase "CU03 - Ver detalle de producto" as CU03
+    usecase "CU04 - Seleccionar variante" as CU04
+    usecase "CU05 - Filtrar por categoría, marca,\nsubcategoría y rango de precios" as CU05
+  }
+
+  package "Módulo Carrito" {
+    usecase "CU06 - Agregar al carrito" as CU06
+    usecase "CU07 - Ver y editar carrito" as CU07
+    usecase "CU08 - Cambiar cantidad" as CU08
+    usecase "CU09 - Eliminar producto del carrito" as CU09
+  }
+
+  package "Módulo Checkout" {
+    usecase "CU10 - Realizar checkout" as CU10
+    usecase "CU11 - Ingresar datos personales" as CU11
+    usecase "CU12 - Ver confirmación de orden" as CU12
+  }
+
+  package "Módulo Autenticación" {
+    usecase "CU13 - Login administrador" as CU13
+  }
+
+  package "Módulo Dashboard" {
+    usecase "CU14 - Ver dashboard" as CU14
+    usecase "CU15 - Ver estadísticas de ventas" as CU15
+  }
+
+  package "Módulo Gestión Productos" {
+    usecase "CU16 - Crear producto" as CU16
+    usecase "CU17 - Editar producto" as CU17
+    usecase "CU18 - Eliminar producto" as CU18
+    usecase "CU19 - Gestionar variantes" as CU19
+    usecase "CU20 - Gestionar imágenes" as CU20
+  }
+
+  package "Módulo Gestión Catálogo" {
+    usecase "CU21 - Crear categoría/marca" as CU21
+    usecase "CU22 - Editar categoría/marca" as CU22
+    usecase "CU23 - Eliminar categoría/marca" as CU23
+  }
+
+  package "Módulo Gestión Órdenes" {
+    usecase "CU24 - Ver todas las órdenes" as CU24
+    usecase "CU25 - Cambiar estado de orden" as CU25
+  }
+
+  package "Módulo Gestión Usuarios" {
+    usecase "CU26 - Crear administrador" as CU26
+    usecase "CU27 - Desactivar administrador" as CU27
+  }
+}
+
+C --> CU01
+C --> CU02
+C --> CU03
+CU03 ..> CU04 : <<include>>
+C --> CU05
+C --> CU06
+CU06 ..> CU03 : <<extend>>
+C --> CU07
+CU07 ..> CU08 : <<include>>
+CU07 ..> CU09 : <<include>>
+C --> CU10
+CU10 ..> CU11 : <<include>>
+CU10 ..> CU12 : <<extend>>
+
+A --> CU13
+A --> CU14
+CU14 ..> CU15 : <<include>>
+A --> CU16
+A --> CU17
+A --> CU18
+A --> CU19
+A --> CU20
+A --> CU21
+A --> CU22
+A --> CU23
+A --> CU24
+A --> CU25
+A --> CU26
+A --> CU27
+
+@enduml

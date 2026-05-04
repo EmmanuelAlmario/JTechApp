@@ -1,0 +1,102 @@
+@startuml diagrama_clases_jtech
+title Diagrama de Clases - JTech Ecommerce
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+
+enum RolUsuario {
+  ADMIN
+  CLIENTE
+}
+
+enum EstadoOrden {
+  PENDIENTE
+  PROCESANDO
+  ENVIADO
+  ENTREGADO
+  CANCELADO
+}
+
+class Usuario {
+  - id: Long
+  - nombre: String
+  - email: String
+  - password: String
+  - rol: RolUsuario
+  - activo: Boolean
+}
+
+class Categoria {
+  - id: Long
+  - nombre: String
+  - descripcion: String
+}
+
+class Subcategoria {
+  - id: Long
+  - nombre: String
+  - categoria: Categoria
+}
+
+class Marca {
+  - id: Long
+  - nombre: String
+  - logo: String
+}
+
+class Producto {
+  - id: Long
+  - nombre: String
+  - descripcion: String
+  - categoria: Categoria
+  - subcategoria: Subcategoria
+  - marca: Marca
+  - activo: Boolean
+}
+
+class VarianteProducto {
+  - id: Long
+  - producto: Producto
+  - nombre: String
+  - precio: Double
+  - stock: Integer
+  - sku: String
+  + generarSku(): String
+}
+
+class ImagenProducto {
+  - id: Long
+  - producto: Producto
+  - url: String
+  - esPrincipal: Boolean
+}
+
+class Orden {
+  - id: Long
+  - nombreCliente: String
+  - email: String
+  - direccion: String
+  - total: Double
+  - estado: EstadoOrden
+  - fecha: LocalDate
+}
+
+class DetalleOrden {
+  - id: Long
+  - orden: Orden
+  - variante: VarianteProducto
+  - cantidad: Integer
+  - precioUnitario: Double
+}
+
+Categoria "1" --> "0..*" Subcategoria : tiene
+Subcategoria "1" --> "0..*" Producto : clasifica
+Marca "1" --> "0..*" Producto : fabrica
+Producto "1" --> "1..*" VarianteProducto : tiene
+Producto "1" --> "0..*" ImagenProducto : tiene
+Orden "1" --> "1..*" DetalleOrden : contiene
+VarianteProducto "1" --> "0..*" DetalleOrden : incluida en
+Usuario --> RolUsuario
+Orden --> EstadoOrden
+
+@enduml
