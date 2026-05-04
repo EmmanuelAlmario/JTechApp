@@ -169,7 +169,7 @@ DELETE /marcas/{id}          → eliminar marca
 - Estética limpia y minimalista inspirada en Apple Store
 - Paleta de colores: por definir
 - Componentes animados con React Bits
-- Diseño responsive para móvil y escritorio
+- Diseño responsive para escritorio hasta el momento.
 
 ---
 
