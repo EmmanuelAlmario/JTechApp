@@ -25,7 +25,7 @@ cuentan con un panel completo para gestionar productos, categorías, marcas y ó
 | Tecnología | Versión | Uso |
 |---|---|---|
 | Java | 21 | Lenguaje principal |
-| Spring Boot | 3.5.x | Framework principal |
+| Spring Boot | 3.5.14 | Framework principal |
 | Spring Data JPA | - | Acceso a datos |
 | Spring Security | - | Autenticación y autorización |
 | JWT | 0.12.3 | Tokens de autenticación |
@@ -177,4 +177,4 @@ DELETE /marcas/{id}          → eliminar marca
 
 | Nombre | Programa | Rol |
 |---|---|---|
-| Emmanuel | Desarrollo de Software — 3er semestre | Full Stack Developer |
+| Emmanuel | Desarrollo de Software — 3er semestre | Desarrollador |
