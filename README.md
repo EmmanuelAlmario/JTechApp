@@ -1,6 +1,10 @@
-# JTech — Ecommerce de Tecnología
+# <img src="https://img.shields.io/badge/JTech-Ecommerce-black?style=for-the-badge&logo=shopify&logoColor=white"/>
 
-## Descripción
+> Plataforma de comercio electrónico especializada en productos tecnológicos — limpia, rápida y moderna.
+
+---
+
+## 📋 Descripción
 JTech es una plataforma de comercio electrónico especializada en productos tecnológicos.
 Permite a los clientes explorar un catálogo completo de productos, filtrarlos por categoría,
 marca y precio, gestionar su carrito de compras y realizar pedidos. Los administradores
@@ -8,13 +12,20 @@ cuentan con un panel completo para gestionar productos, categorías, marcas y ó
 
 ---
 
-## Stack Tecnológico
+## 🛠️ Stack Tecnológico
 
 ### Backend
+![Java](https://img.shields.io/badge/Java_21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot_3.5-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL_16-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white)
+
 | Tecnología | Versión | Uso |
 |---|---|---|
 | Java | 21 | Lenguaje principal |
-| Spring Boot | 3.5.14 (La mas estable hasta ahora) | Framework principal |
+| Spring Boot | 3.5.x | Framework principal |
 | Spring Data JPA | - | Acceso a datos |
 | Spring Security | - | Autenticación y autorización |
 | JWT | 0.12.3 | Tokens de autenticación |
@@ -26,6 +37,11 @@ cuentan con un panel completo para gestionar productos, categorías, marcas y ó
 | Maven | - | Gestión de dependencias |
 
 ### Frontend
+![React](https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white)
+
 | Tecnología | Versión | Uso |
 |---|---|---|
 | React | 18 | Framework UI |
@@ -61,7 +77,7 @@ com.jtech.jtech-backend
 
 ---
 
-## Roles de Usuario
+## 👥 Roles de Usuario
 
 ### Cliente (con registro)
 - Registro e inicio de sesión
@@ -102,7 +118,7 @@ com.jtech.jtech-backend
 
 ---
 
-## Endpoints
+## 🔌 Endpoints
 
 ### Públicos (sin autenticación)
 ```
@@ -151,12 +167,14 @@ DELETE /marcas/{id}          → eliminar marca
 
 ## Diseño
 - Estética limpia y minimalista inspirada en Apple Store
-- Paleta de colores: blanco: No definida aun.
+- Paleta de colores: por definir
 - Componentes animados con React Bits
+- Diseño responsive para móvil y escritorio
 
 ---
 
 ## Equipo
-| Nombre | Rol | Programa
+
+| Nombre | Programa | Rol |
 |---|---|---|
-| Emmanuel | Estudiante 3er semestre | Desarrollo de software
+| Emmanuel | Desarrollo de Software — 3er semestre | Full Stack Developer |
