@@ -30,6 +30,7 @@ class Categoria {
   - id: Long
   - nombre: String
   - descripcion: String
+  - subcategorias: List<Subcategoria>
 }
 
 class Subcategoria {
@@ -61,7 +62,6 @@ class VarianteProducto {
   - precio: Double
   - stock: Integer
   - sku: String
-  + generarSku(): String
 }
 
 class ImagenProducto {
