@@ -30,8 +30,7 @@ cuentan con un panel completo para gestionar productos, categorías, marcas y ó
 | Spring Security | - | Autenticación y autorización |
 | JWT | 0.12.3 | Tokens de autenticación |
 | Hibernate | - | ORM |
-| PostgreSQL | 16 | Base de datos producción |
-| H2 | - | Base de datos desarrollo |
+|| H2 | - | Base de datos desarrollo |
 | Lombok | - | Reducción de boilerplate |
 | Bean Validation | - | Validación de datos |
 | Maven | - | Gestión de dependencias |
@@ -115,6 +114,8 @@ com.jtech.jtech-backend
 | `imagenes_producto` | Imágenes asociadas a cada producto |
 | `ordenes` | Órdenes realizadas por los clientes |
 | `detalle_ordenes` | Productos incluidos en cada orden |
+| 'administradores' | Administradores del sistema |
+        |'clientes' | Clientes del sistma| 
 
 ---
 
