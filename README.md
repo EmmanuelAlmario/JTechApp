@@ -67,22 +67,27 @@ Base de datos (H2 File)
 ```
 com.jtech.JtechApp
 ├── categoria/
+|   ├── exception/
 │   ├── entity/
 │   ├── repository/
 │   └── service/
 ├── orden/
+|   ├── exception/
 │   ├── entity/
 │   ├── repository/
 │   └── service/
 ├── pago/
+|   ├── exception/
 │   ├── entity/
 │   ├── repository/
 │   └── service/
 ├── producto/
+|   ├── exception/
 │   ├── entity/
 │   ├── repository/
 │   └── service/
 └── usuario/
+    ├── exception/
     ├── entity/
     ├── repository/
     └── service/
@@ -246,12 +251,8 @@ documentation/
 
 ## Equipo
 
-| Nombre | Programa | Rol |
-|---|---|---|
-| Emmanuel | Desarrollo de Software - 3er semestre | Full Stack Developer |
+| Nombre | Programa | Rol | Seccion (Clase) |
+|---|---|---|---|
+| Emmanuel Almario | Desarrollo de Software - 3er semestre | Desarrollador | 1604 |
 
 ---
-
-<div align="center">
-  Desarrollado con por el equipo JTech
-</div>
