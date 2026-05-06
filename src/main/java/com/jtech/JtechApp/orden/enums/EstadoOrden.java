@@ -1,4 +1,4 @@
-package com.jtech.JtechApp.enums;
+package com.jtech.JtechApp.orden.enums;
 
 public enum EstadoOrden {
     PENDIENTE,

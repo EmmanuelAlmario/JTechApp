@@ -1,7 +1,6 @@
-package com.jtech.JtechApp.entity;
+package com.jtech.JtechApp.usuario.entity;
 
 
-import com.jtech.JtechApp.enums.RolUsuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -13,9 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(name = "usuarios")
-public class Usuario {
+public abstract class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,11 +35,8 @@ public class Usuario {
     private String password;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private RolUsuario rol = RolUsuario.CLIENTE;
-
-    @NotNull
     @Column(nullable = false)
     private Boolean activo = true;
+
+    public abstract String getRol();
 }

@@ -1,4 +1,4 @@
-package com.jtech.JtechApp.entity;
+package com.jtech.JtechApp.producto.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

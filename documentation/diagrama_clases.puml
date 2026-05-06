@@ -1,102 +1,152 @@
 @startuml diagrama_clases_jtech
 title Diagrama de Clases - JTech Ecommerce
+
 left to right direction
 skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
 
-enum RolUsuario {
-  ADMIN
-  CLIENTE
+enum NivelAdmin {
+    ADMIN
+    SUPER_ADMIN
 }
 
 enum EstadoOrden {
-  PENDIENTE
-  PROCESANDO
-  ENVIADO
-  ENTREGADO
-  CANCELADO
+    PENDIENTE
+    PROCESANDO
+    ENVIADO
+    ENTREGADO
+    CANCELADO
 }
 
-class Usuario {
-  - id: Long
-  - nombre: String
-  - email: String
-  - password: String
-  - rol: RolUsuario
-  - activo: Boolean
+abstract class Usuario {
+    - id: Long
+    - nombre: String
+    - email: String
+    - password: String
+    - activo: Boolean
+    + {abstract} getRol(): String
+}
+
+class Cliente {
+    - telefono: String
+    - direccion: String
+    - ordenes: List<Orden>
+    + getRol(): String
+}
+
+class Administrador {
+    - cargo: String
+    - nivel: NivelAdmin
+    + getRol(): String
+}
+
+abstract class MetodoPago {
+    - id: Long
+    + {abstract} procesarPago(): void
+    + {abstract} getTipo(): String
+}
+
+class PagoEfectivo {
+    + procesarPago(): void
+    + getTipo(): String
+}
+
+class PagoTarjetaCredito {
+    - ultimosCuatroDigitos: String
+    - nombreTitular: String
+    + procesarPago(): void
+    + getTipo(): String
+}
+
+class PagoTarjetaDebito {
+    - ultimosCuatroDigitos: String
+    - nombreTitular: String
+    + procesarPago(): void
+    + getTipo(): String
 }
 
 class Categoria {
-  - id: Long
-  - nombre: String
-  - descripcion: String
-  - subcategorias: List<Subcategoria>
+    - id: Long
+    - nombre: String
+    - descripcion: String
 }
 
 class Subcategoria {
-  - id: Long
-  - nombre: String
-  - categoria: Categoria
+    - id: Long
+    - nombre: String
+    - categoria: Categoria
 }
 
 class Marca {
-  - id: Long
-  - nombre: String
-  - logo: String
+    - id: Long
+    - nombre: String
+    - logo: String
 }
 
 class Producto {
-  - id: Long
-  - nombre: String
-  - descripcion: String
-  - categoria: Categoria
-  - subcategoria: Subcategoria
-  - marca: Marca
-  - activo: Boolean
+    - id: Long
+    - nombre: String
+    - descripcion: String
+    - categoria: Categoria
+    - subcategoria: Subcategoria
+    - marca: Marca
+    - activo: Boolean
+    - variantes: List<VarianteProducto>
+    - imagenes: List<ImagenProducto>
 }
 
 class VarianteProducto {
-  - id: Long
-  - producto: Producto
-  - nombre: String
-  - precio: Double
-  - stock: Integer
-  - sku: String
+    - id: Long
+    - producto: Producto
+    - nombre: String
+    - precio: BigDecimal
+    - stock: Integer
+    - sku: String
 }
 
 class ImagenProducto {
-  - id: Long
-  - producto: Producto
-  - url: String
-  - esPrincipal: Boolean
+    - id: Long
+    - producto: Producto
+    - url: String
+    - esPrincipal: Boolean
 }
 
 class Orden {
-  - id: Long
-  - nombreCliente: String
-  - email: String
-  - direccion: String
-  - total: Double
-  - estado: EstadoOrden
-  - fecha: LocalDate
+    - id: Long
+    - cliente: Cliente
+    - metodoPago: MetodoPago
+    - direccion: String
+    - total: BigDecimal
+    - estado: EstadoOrden
+    - fecha: LocalDateTime
+    - detalles: List<DetalleOrden>
 }
 
 class DetalleOrden {
-  - id: Long
-  - orden: Orden
-  - variante: VarianteProducto
-  - cantidad: Integer
-  - precioUnitario: Double
+    - id: Long
+    - orden: Orden
+    - variante: VarianteProducto
+    - cantidad: Integer
+    - precioUnitario: BigDecimal
 }
+
+Usuario <|-- Cliente
+Usuario <|-- Administrador
+MetodoPago <|-- PagoEfectivo
+MetodoPago <|-- PagoTarjetaCredito
+MetodoPago <|-- PagoTarjetaDebito
+
+Administrador --> NivelAdmin
+Orden --> EstadoOrden
 
 Categoria "1" --> "0..*" Subcategoria : tiene
 Subcategoria "1" --> "0..*" Producto : clasifica
 Marca "1" --> "0..*" Producto : fabrica
 Producto "1" --> "1..*" VarianteProducto : tiene
 Producto "1" --> "0..*" ImagenProducto : tiene
+Cliente "1" --> "0..*" Orden : realiza
 Orden "1" --> "1..*" DetalleOrden : contiene
+Orden --> MetodoPago : usa
 VarianteProducto "1" --> "0..*" DetalleOrden : incluida en
-Usuario --> RolUsuario
-Orden --> EstadoOrden
 
 @enduml

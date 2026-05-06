@@ -1,4 +1,4 @@
-package com.jtech.JtechApp.entity;
+package com.jtech.JtechApp.producto.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -17,6 +17,7 @@ public class ImagenProducto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "producto_id", nullable = false)
     private Producto producto;
@@ -27,5 +28,5 @@ public class ImagenProducto {
 
     @NotNull
     @Column(nullable = false)
-    private Boolean es_principal = false;
+    private Boolean esPrincipal = false;
 }

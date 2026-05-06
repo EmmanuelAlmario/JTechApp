@@ -1,5 +1,7 @@
-package com.jtech.JtechApp.entity;
+package com.jtech.JtechApp.producto.entity;
 
+import com.jtech.JtechApp.categoria.entity.Categoria;
+import com.jtech.JtechApp.categoria.entity.Subcategoria;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

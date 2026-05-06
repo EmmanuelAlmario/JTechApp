@@ -1,4 +1,4 @@
-package com.jtech.JtechApp.entity;
+package com.jtech.JtechApp.producto.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -21,6 +21,7 @@ public class VarianteProducto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "producto_id", nullable = false)
     private Producto producto;
@@ -29,6 +30,7 @@ public class VarianteProducto {
     @Column(length = 150, nullable = false)
     private String nombre;
 
+    @NotNull
     @Column(nullable = false, precision = 10, scale = 2)
     @Positive
     private BigDecimal precio;
@@ -36,9 +38,9 @@ public class VarianteProducto {
     @NotNull
     @PositiveOrZero
     @Column(nullable = false)
-    private Integer stock;
+    private Integer stock = 0;
 
     @NotNull
-    @Column(length = 100)
+    @Column(length = 100, nullable = false)
     private String sku;
 }

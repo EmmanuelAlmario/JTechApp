@@ -1,54 +1,53 @@
-# <img src="https://img.shields.io/badge/JTech-Ecommerce-black?style=for-the-badge&logo=shopify&logoColor=white"/>
+# JTech Ecommerce
 
-> Plataforma de comercio electrónico especializada en productos tecnológicos — limpia, rápida y moderna.
-
----
-
-## 📋 Descripción
-JTech es una plataforma de comercio electrónico especializada en productos tecnológicos.
-Permite a los clientes explorar un catálogo completo de productos, filtrarlos por categoría,
-marca y precio, gestionar su carrito de compras y realizar pedidos. Los administradores
-cuentan con un panel completo para gestionar productos, categorías, marcas y órdenes.
-
----
-
-## 🛠️ Stack Tecnológico
-
-### Backend
 ![Java](https://img.shields.io/badge/Java_21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot_3.5-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL_16-316192?style=for-the-badge&logo=postgresql&logoColor=white)
-![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white)
-![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white)
+![H2](https://img.shields.io/badge/H2_Database-0000FF?style=for-the-badge&logo=databricks&logoColor=white)
+![React](https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white)
 
-| Tecnología | Versión | Uso |
+> Plataforma de comercio electronico especializada en productos tecnologicos — limpia, rapida y moderna.
+
+---
+
+## Descripcion
+
+JTech es una plataforma de comercio electronico especializada en productos tecnologicos.
+Permite a los clientes explorar un catalogo completo de productos, filtrarlos por categoria,
+marca y precio, gestionar su carrito de compras y realizar pedidos. Los administradores
+cuentan con un panel completo para gestionar productos, categorias, marcas y ordenes.
+
+---
+
+## Stack Tecnologico
+
+### Backend
+
+| Tecnologia | Version | Uso |
 |---|---|---|
 | Java | 21 | Lenguaje principal |
 | Spring Boot | 3.5.x | Framework principal |
 | Spring Data JPA | - | Acceso a datos |
-| Spring Security | - | Autenticación y autorización |
-| JWT | 0.12.3 | Tokens de autenticación |
+| Spring Security | - | Autenticacion y autorizacion |
+| JWT | 0.12.3 | Tokens de autenticacion |
 | Hibernate | - | ORM |
-| PostgreSQL | 16 | Base de datos producción |
-| H2 | - | Base de datos desarrollo |
-| Lombok | - | Reducción de boilerplate |
-| Bean Validation | - | Validación de datos |
-| Maven | - | Gestión de dependencias |
+| H2 File | - | Base de datos con persistencia |
+| Lombok | - | Reduccion de boilerplate |
+| Bean Validation | - | Validacion de datos |
+| Maven | - | Gestion de dependencias |
 
 ### Frontend
-![React](https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white)
 
-| Tecnología | Versión | Uso |
+| Tecnologia | Version | Uso |
 |---|---|---|
 | React | 18 | Framework UI |
 | Vite | - | Build tool |
 | Tailwind CSS | - | Estilos |
 | React Bits | - | Componentes animados |
-| React Router | - | Navegación |
+| React Router | - | Navegacion |
 | Axios | - | Peticiones HTTP |
 
 ---
@@ -57,119 +56,191 @@ cuentan con un panel completo para gestionar productos, categorías, marcas y ó
 
 ```
 Frontend (React + Vite)
-        ↓ HTTP / REST
+        HTTP / REST
 Backend (Spring Boot)
-        ↓ JPA / Hibernate
-Base de datos (PostgreSQL)
+        JPA / Hibernate
+Base de datos (H2 File)
 ```
 
 ### Estructura del Backend
+
 ```
-com.jtech.jtech-backend
-├── entity/         → Modelos de datos (entidades JPA)
-├── repository/     → Interfaces de acceso a datos
-├── service/        → Lógica de negocio
-├── controller/     → Endpoints REST
-├── security/       → Configuración JWT y Spring Security
-├── dto/            → Objetos de transferencia de datos
-└── exception/      → Manejo global de excepciones
+com.jtech.JtechApp
+├── categoria/
+│   ├── entity/
+│   ├── repository/
+│   └── service/
+├── orden/
+│   ├── entity/
+│   ├── repository/
+│   └── service/
+├── pago/
+│   ├── entity/
+│   ├── repository/
+│   └── service/
+├── producto/
+│   ├── entity/
+│   ├── repository/
+│   └── service/
+└── usuario/
+    ├── entity/
+    ├── repository/
+    └── service/
 ```
 
 ---
 
-## 👥 Roles de Usuario
+## Conceptos POO Aplicados
+
+| Concepto | Implementacion |
+|---|---|
+| Herencia | `Usuario` -> `Cliente` / `Administrador`, `MetodoPago` -> `PagoEfectivo` / `PagoTarjetaCredito` / `PagoTarjetaDebito` |
+| Abstraccion | Clases abstractas `Usuario` y `MetodoPago` |
+| Polimorfismo | `@Override` en `getRol()` y `procesarPago()` por cada subclase |
+| Encapsulacion | Todos los atributos privados con getters/setters via Lombok |
+
+---
+
+## Roles de Usuario
 
 ### Cliente (con registro)
-- Registro e inicio de sesión
-- Ver catálogo completo de productos
-- Filtrar por categoría, subcategoría, marca y rango de precios
+- Registro e inicio de sesion
+- Ver catalogo completo de productos
+- Filtrar por categoria, subcategoria, marca y rango de precios
 - Buscar productos por nombre
 - Ver detalle de producto con variantes y fotos
 - Agregar productos al carrito (localStorage)
 - Ver y editar carrito
-- Realizar checkout
-- Ver historial de órdenes propias
+- Realizar checkout con metodo de pago
+- Ver historial de ordenes propias
 
 ### Administrador
 - Login seguro con JWT
-- Dashboard con estadísticas (ventas, órdenes, productos)
-- Gestión completa de productos (crear, editar, eliminar)
-- Gestión de variantes e imágenes de productos
-- Gestión de categorías, subcategorías y marcas
-- Ver y gestionar todas las órdenes
-- Cambiar estado de órdenes (pendiente, procesando, enviado, entregado)
-- Gestión de usuarios administradores
+- Dashboard con estadisticas (ventas, ordenes, productos)
+- Gestion completa de productos (crear, editar, eliminar)
+- Gestion de variantes e imagenes de productos
+- Gestion de categorias, subcategorias y marcas
+- Ver y gestionar todas las ordenes
+- Cambiar estado de ordenes (pendiente, procesando, enviado, entregado)
+- Gestion de usuarios administradores
+
+### Super Administrador
+- Todo lo del Administrador
+- Crear y desactivar administradores
 
 ---
 
 ## Modelos de Datos
 
-| Tabla | Descripción |
+| Tabla | Descripcion |
 |---|---|
-| `usuarios` | Clientes y administradores del sistema |
-| `categorias` | Categorías principales de productos |
-| `subcategorias` | Subcategorías dentro de cada categoría |
+| `usuarios` | Base de clientes y administradores |
+| `clientes` | Datos especificos del cliente |
+| `administradores` | Datos especificos del administrador |
+| `categorias` | Categorias principales de productos |
+| `subcategorias` | Subcategorias dentro de cada categoria |
 | `marcas` | Marcas de los productos |
-| `productos` | Productos del catálogo |
-| `variantes_producto` | Variantes de cada producto (color, almacenamiento, etc.) |
-| `imagenes_producto` | Imágenes asociadas a cada producto |
-| `ordenes` | Órdenes realizadas por los clientes |
+| `productos` | Productos del catalogo |
+| `variantes_producto` | Variantes de cada producto |
+| `imagenes_producto` | Imagenes asociadas a cada producto |
+| `metodos_pago` | Base de metodos de pago |
+| `pagos_efectivo` | Pagos realizados en efectivo |
+| `pagos_tarjeta_credito` | Pagos con tarjeta de credito |
+| `pagos_tarjeta_debito` | Pagos con tarjeta de debito |
+| `ordenes` | Ordenes realizadas por los clientes |
 | `detalle_ordenes` | Productos incluidos en cada orden |
 
 ---
 
-## 🔌 Endpoints
+## Endpoints
 
-### Públicos (sin autenticación)
+### Publicos (sin autenticacion)
 ```
-GET  /productos              → listar productos
-GET  /productos/{id}         → detalle de producto
-GET  /productos/buscar       → buscar por nombre
-GET  /productos/filtrar      → filtrar por categoría, marca, precio
-GET  /categorias             → listar categorías
-GET  /marcas                 → listar marcas
-POST /auth/login             → login
-POST /auth/register          → registro de cliente
+GET  /productos              -> listar productos
+GET  /productos/{id}         -> detalle de producto
+GET  /productos/buscar       -> buscar por nombre
+GET  /productos/filtrar      -> filtrar por categoria, marca, precio
+GET  /categorias             -> listar categorias
+GET  /marcas                 -> listar marcas
+POST /auth/login             -> login
+POST /auth/register          -> registro de cliente
 ```
 
 ### Cliente (token CLIENTE)
 ```
-GET  /mis-ordenes            → historial de órdenes del cliente
-POST /ordenes                → crear orden
+GET  /mis-ordenes            -> historial de ordenes del cliente
+POST /ordenes                -> crear orden
 ```
 
 ### Administrador (token ADMIN)
 ```
-POST   /productos            → crear producto
-PUT    /productos/{id}       → actualizar producto
-DELETE /productos/{id}       → eliminar producto
-GET    /ordenes              → ver todas las órdenes
-PUT    /ordenes/{id}/estado  → cambiar estado de orden
-GET    /dashboard/stats      → ver estadísticas
-POST   /categorias           → crear categoría
-PUT    /categorias/{id}      → actualizar categoría
-DELETE /categorias/{id}      → eliminar categoría
-POST   /marcas               → crear marca
-PUT    /marcas/{id}          → actualizar marca
-DELETE /marcas/{id}          → eliminar marca
+POST   /productos            -> crear producto
+PUT    /productos/{id}       -> actualizar producto
+DELETE /productos/{id}       -> eliminar producto
+GET    /ordenes              -> ver todas las ordenes
+PUT    /ordenes/{id}/estado  -> cambiar estado de orden
+GET    /dashboard/stats      -> ver estadisticas
+POST   /categorias           -> crear categoria
+PUT    /categorias/{id}      -> actualizar categoria
+DELETE /categorias/{id}      -> eliminar categoria
+POST   /marcas               -> crear marca
+PUT    /marcas/{id}          -> actualizar marca
+DELETE /marcas/{id}          -> eliminar marca
+POST   /administradores      -> crear administrador (solo SUPER_ADMIN)
+DELETE /administradores/{id} -> desactivar administrador (solo SUPER_ADMIN)
 ```
 
 ---
 
 ## Seguridad
-- Autenticación mediante **JWT (JSON Web Token)**
-- Contraseñas encriptadas con **BCrypt**
-- Rutas protegidas según rol con **Spring Security**
-- CORS configurado para comunicación Frontend ↔ Backend
-- Roles: `ADMIN`, `CLIENTE`
+- Autenticacion mediante JWT (JSON Web Token)
+- Contrasenas encriptadas con BCrypt
+- Rutas protegidas segun rol con Spring Security
+- CORS configurado para comunicacion Frontend <-> Backend
+- Roles: `SUPER_ADMIN`, `ADMIN`, `CLIENTE`
+
+---
+
+## Como ejecutar el proyecto
+
+### Requisitos
+- Java 21
+- Maven
+- Node.js 20+
+
+### Backend
+```bash
+cd backend
+mvn spring-boot:run
+```
+
+La base de datos H2 se crea automaticamente en `data/jtechdb`.
+Consola H2 disponible en: `http://localhost:8080/h2-console`
+
+### Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+---
+
+## Documentacion
+
+```
+documentation/
+├── diagrama_clases.puml
+└── casos_de_uso.puml
+└── DiagramaER.pdf
+```
 
 ---
 
 ## Diseño
-- Estética limpia y minimalista inspirada en Apple Store
+- Estetica limpia y minimalista inspirada en Apple Store
 - Paleta de colores: por definir
 - Componentes animados con React Bits
-- Diseño responsive para móvil y escritorio
 
 ---
 
@@ -177,4 +248,10 @@ DELETE /marcas/{id}          → eliminar marca
 
 | Nombre | Programa | Rol |
 |---|---|---|
-| Emmanuel | Desarrollo de Software — 3er semestre | Full Stack Developer |
+| Emmanuel | Desarrollo de Software - 3er semestre | Full Stack Developer |
+
+---
+
+<div align="center">
+  Desarrollado con por el equipo JTech
+</div>
