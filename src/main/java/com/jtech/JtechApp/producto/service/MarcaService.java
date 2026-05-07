@@ -1,5 +1,8 @@
 package com.jtech.JtechApp.producto.service;
 
+import com.jtech.JtechApp.producto.dto.request.CreateMarcaRequestDTO;
+import com.jtech.JtechApp.producto.dto.request.UpdateMarcaRequestDTO;
+import com.jtech.JtechApp.producto.dto.response.MarcaResponseDTO;
 import com.jtech.JtechApp.producto.entity.Marca;
 import com.jtech.JtechApp.producto.exception.MarcaNoEncontradaException;
 import com.jtech.JtechApp.producto.exception.NombreMarcaExistenteException;
@@ -16,34 +19,50 @@ public class MarcaService {
 
     private final MarcaRepository marcaRepository;
 
-    public List<Marca> findAll() {
-        return marcaRepository.findAll();
+    public List<MarcaResponseDTO> findAll() {
+        return marcaRepository.findAll()
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
-    public Marca findById(Long marcaId) {
-        return marcaRepository.findById(marcaId)
-                .orElseThrow(() -> new MarcaNoEncontradaException());
+    public MarcaResponseDTO findById(Long marcaId) {
+        return toResponse(marcaRepository.findById(marcaId)
+                .orElseThrow(() -> new MarcaNoEncontradaException()));
     }
 
     @Transactional
-    public Marca save(Marca marca) {
-        if (marcaRepository.existsByNombre(marca.getNombre())) {
-            throw new NombreMarcaExistenteException(marca.getNombre());
+    public MarcaResponseDTO save(CreateMarcaRequestDTO dto) {
+        if (marcaRepository.existsByNombre(dto.nombre())) {
+            throw new NombreMarcaExistenteException(dto.nombre());
         }
-        return marcaRepository.save(marca);
+        Marca marca = new Marca();
+        marca.setNombre(dto.nombre());
+        marca.setLogo(dto.logo());
+        return toResponse(marcaRepository.save(marca));
     }
 
     @Transactional
-    public Marca update(Long marcaId, Marca marcaActualizada) {
-        Marca marca = findById(marcaId);
-        marca.setNombre(marcaActualizada.getNombre());
-        marca.setLogo(marcaActualizada.getLogo());
-        return marcaRepository.save(marca);
+    public MarcaResponseDTO update(Long marcaId, UpdateMarcaRequestDTO dto) {
+        Marca marca = marcaRepository.findById(marcaId)
+                .orElseThrow(() -> new MarcaNoEncontradaException());
+        marca.setNombre(dto.nombre());
+        marca.setLogo(dto.logo());
+        return toResponse(marcaRepository.save(marca));
     }
 
     @Transactional
     public void delete(Long marcaId) {
-        findById(marcaId);
+        marcaRepository.findById(marcaId)
+                .orElseThrow(() -> new MarcaNoEncontradaException());
         marcaRepository.deleteById(marcaId);
+    }
+
+    private MarcaResponseDTO toResponse(Marca marca) {
+        return new MarcaResponseDTO(
+                marca.getId(),
+                marca.getNombre(),
+                marca.getLogo()
+        );
     }
 }

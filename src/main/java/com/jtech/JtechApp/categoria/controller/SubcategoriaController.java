@@ -20,45 +20,18 @@ public class SubcategoriaController {
 
     @GetMapping
     public ResponseEntity<List<SubcategoriaResponseDTO>> findAll() {
-        List<Subcategoria> subcategorias = subcategoriaService.findAll();
-        List<SubcategoriaResponseDTO> response = new ArrayList<>();
-
-        for (Subcategoria subcategoria : subcategorias) {
-            response.add(toResponse(subcategoria));
-        }
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(subcategoriaService.findAll());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SubcategoriaResponseDTO> update(
-            @PathVariable Long id,
-            @RequestBody UpdateSubcategoriaRequestDTO dto) {
-
-        Subcategoria subcategoria = new Subcategoria();
-        subcategoria.setNombre(dto.nombre());
-
-        Subcategoria updatedSubcategoria = subcategoriaService.update(null, id, subcategoria);
-        return ResponseEntity.ok(toResponse(updatedSubcategoria));
+    public ResponseEntity<SubcategoriaResponseDTO> update(@PathVariable Long id,
+                                                          @RequestBody UpdateSubcategoriaRequestDTO dto) {
+        return ResponseEntity.ok(subcategoriaService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         subcategoriaService.delete(id);
         return ResponseEntity.noContent().build();
-    }
-
-    private SubcategoriaResponseDTO toResponse(Subcategoria subcategoria) {
-        Long categoriaId = null;
-
-        if (subcategoria.getCategoria() != null) {
-            categoriaId = subcategoria.getCategoria().getId();
-        }
-
-        return new SubcategoriaResponseDTO(
-                subcategoria.getId(),
-                subcategoria.getNombre(),
-                categoriaId
-        );
     }
 }
