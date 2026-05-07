@@ -2,7 +2,6 @@ package com.jtech.JtechApp.orden.entity;
 
 import com.jtech.JtechApp.usuario.entity.Cliente;
 import com.jtech.JtechApp.orden.enums.EstadoOrden;
-import com.jtech.JtechApp.usuario.entity.Usuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

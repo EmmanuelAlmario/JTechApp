@@ -156,38 +156,51 @@ com.jtech.JtechApp
 
 ### Publicos (sin autenticacion)
 ```
-GET  /productos              -> listar productos
-GET  /productos/{id}         -> detalle de producto
-GET  /productos/buscar       -> buscar por nombre
-GET  /productos/filtrar      -> filtrar por categoria, marca, precio
-GET  /categorias             -> listar categorias
-GET  /marcas                 -> listar marcas
-POST /auth/login             -> login
-POST /auth/register          -> registro de cliente
+GET  /productos                        -> listar productos activos
+GET  /productos/{id}                   -> detalle de producto
+GET  /productos/buscar?nombre=         -> buscar por nombre
+GET  /productos/filtrar?categoriaId=&marcaId= -> filtrar por categoria y marca
+GET  /categorias                       -> listar categorias
+GET  /categorias/{id}                  -> detalle de categoria
+GET  /categorias/{id}/subcategorias    -> subcategorias de una categoria
+GET  /subcategorias                    -> listar todas las subcategorias
+GET  /marcas                           -> listar marcas
+GET  /marcas/{id}                      -> detalle de marca
+POST /auth/login                       -> login
+POST /auth/register                    -> registro de cliente
 ```
 
 ### Cliente (token CLIENTE)
 ```
-GET  /mis-ordenes            -> historial de ordenes del cliente
-POST /ordenes                -> crear orden
+GET  /mis-ordenes                      -> historial de ordenes del cliente
+POST /ordenes                          -> crear orden
 ```
 
 ### Administrador (token ADMIN)
 ```
-POST   /productos            -> crear producto
-PUT    /productos/{id}       -> actualizar producto
-DELETE /productos/{id}       -> eliminar producto
-GET    /ordenes              -> ver todas las ordenes
-PUT    /ordenes/{id}/estado  -> cambiar estado de orden
-GET    /dashboard/stats      -> ver estadisticas
-POST   /categorias           -> crear categoria
-PUT    /categorias/{id}      -> actualizar categoria
-DELETE /categorias/{id}      -> eliminar categoria
-POST   /marcas               -> crear marca
-PUT    /marcas/{id}          -> actualizar marca
-DELETE /marcas/{id}          -> eliminar marca
-POST   /administradores      -> crear administrador (solo SUPER_ADMIN)
-DELETE /administradores/{id} -> desactivar administrador (solo SUPER_ADMIN)
+GET    /productos                      -> listar todos (incluye inactivos)
+POST   /productos                      -> crear producto
+PUT    /productos/{id}                 -> actualizar producto
+DELETE /productos/{id}                 -> eliminar producto
+PATCH  /productos/{id}/toggle-activo   -> activar/desactivar producto
+GET    /ordenes                        -> ver todas las ordenes
+GET    /ordenes?estado=                -> filtrar ordenes por estado
+PUT    /ordenes/{id}/estado            -> cambiar estado de orden
+GET    /dashboard/stats                -> ver estadisticas
+POST   /categorias                     -> crear categoria
+PUT    /categorias/{id}                -> actualizar categoria
+DELETE /categorias/{id}                -> eliminar categoria
+POST   /categorias/{id}/subcategorias  -> crear subcategoria
+PUT    /subcategorias/{id}             -> actualizar subcategoria
+DELETE /subcategorias/{id}             -> eliminar subcategoria
+POST   /marcas                         -> crear marca
+PUT    /marcas/{id}                    -> actualizar marca
+DELETE /marcas/{id}                    -> eliminar marca
+```
+### Super Administrador (token SUPER_ADMIN)
+```
+POST   /administradores                -> crear administrador
+PATCH  /administradores/{id}/toggle-activo -> activar/desactivar administrador
 ```
 
 ---
