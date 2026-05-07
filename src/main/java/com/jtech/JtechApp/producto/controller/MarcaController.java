@@ -1,6 +1,8 @@
 package com.jtech.JtechApp.producto.controller;
 
-import com.jtech.JtechApp.producto.entity.Marca;
+import com.jtech.JtechApp.producto.dto.request.CreateMarcaRequestDTO;
+import com.jtech.JtechApp.producto.dto.request.UpdateMarcaRequestDTO;
+import com.jtech.JtechApp.producto.dto.response.MarcaResponseDTO;
 import com.jtech.JtechApp.producto.service.MarcaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,24 +18,24 @@ public class MarcaController {
     private final MarcaService marcaService;
 
     @GetMapping
-    public ResponseEntity<List<Marca>> findAll() {
+    public ResponseEntity<List<MarcaResponseDTO>> findAll() {
         return ResponseEntity.ok(marcaService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Marca> findById(@PathVariable Long id) {
+    public ResponseEntity<MarcaResponseDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(marcaService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Marca> save(@RequestBody Marca marca) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(marcaService.save(marca));
+    public ResponseEntity<MarcaResponseDTO> save(@RequestBody CreateMarcaRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(marcaService.save(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Marca> update(@PathVariable Long id, @RequestBody Marca marca) {
-        return ResponseEntity.ok(marcaService.update(id, marca));
+    public ResponseEntity<MarcaResponseDTO> update(@PathVariable Long id,
+                                                   @RequestBody UpdateMarcaRequestDTO dto) {
+        return ResponseEntity.ok(marcaService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")

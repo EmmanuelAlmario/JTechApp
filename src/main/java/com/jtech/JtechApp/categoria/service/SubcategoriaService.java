@@ -1,5 +1,7 @@
 package com.jtech.JtechApp.categoria.service;
 
+import com.jtech.JtechApp.categoria.dto.request.UpdateSubcategoriaRequestDTO;
+import com.jtech.JtechApp.categoria.dto.response.SubcategoriaResponseDTO;
 import com.jtech.JtechApp.categoria.entity.Categoria;
 import com.jtech.JtechApp.categoria.entity.Subcategoria;
 import com.jtech.JtechApp.categoria.exception.CategoriaNoEncontradaException;
@@ -18,36 +20,41 @@ public class SubcategoriaService {
     private final SubcategoriaRepository subcategoriaRepository;
     private final CategoriaRepository categoriaRepository;
 
-    public List<Subcategoria> findAll() {
-        return subcategoriaRepository.findAll();
+    public List<SubcategoriaResponseDTO> findAll() {
+        return subcategoriaRepository.findAll().stream()
+                .map(this::toResponse)
+                .toList();
     }
 
-    public List<Subcategoria> findByCategoria(Long categoriaId) {
+    public List<SubcategoriaResponseDTO> findByCategoria(Long categoriaId) {
         categoriaRepository.findById(categoriaId)
                 .orElseThrow(() -> new CategoriaNoEncontradaException(categoriaId));
-        return subcategoriaRepository.findByCategoriaId(categoriaId);
+        return subcategoriaRepository.findByCategoriaId(categoriaId).stream()
+                .map(this::toResponse)
+                .toList();
     }
 
-    public Subcategoria findById(Long categoriaId, Long subcategoriaId) {
-        categoriaRepository.findById(categoriaId)
-                .orElseThrow(() -> new CategoriaNoEncontradaException(categoriaId));
-        return subcategoriaRepository.findById(subcategoriaId)
-                .orElseThrow(() -> new SubcategoriaNoEncontradaException());
+    public SubcategoriaResponseDTO findById(Long subcategoriaId) {
+        return toResponse(subcategoriaRepository.findById(subcategoriaId)
+                .orElseThrow(() -> new SubcategoriaNoEncontradaException()));
     }
 
     @Transactional
-    public Subcategoria save(Long categoriaId, Subcategoria subcategoria) {
+    public SubcategoriaResponseDTO save(Long categoriaId, UpdateSubcategoriaRequestDTO dto) {
         Categoria categoria = categoriaRepository.findById(categoriaId)
                 .orElseThrow(() -> new CategoriaNoEncontradaException(categoriaId));
+        Subcategoria subcategoria = new Subcategoria();
+        subcategoria.setNombre(dto.nombre());
         subcategoria.setCategoria(categoria);
-        return subcategoriaRepository.save(subcategoria);
+        return toResponse(subcategoriaRepository.save(subcategoria));
     }
 
     @Transactional
-    public Subcategoria update(Long categoriaId, Long subcategoriaId, Subcategoria subcategoriaActualizada) {
-        Subcategoria subcategoria = findById(categoriaId, subcategoriaId);
-        subcategoria.setNombre(subcategoriaActualizada.getNombre());
-        return subcategoriaRepository.save(subcategoria);
+    public SubcategoriaResponseDTO update(Long subcategoriaId, UpdateSubcategoriaRequestDTO dto) {
+        Subcategoria subcategoria = subcategoriaRepository.findById(subcategoriaId)
+                .orElseThrow(() -> new SubcategoriaNoEncontradaException());
+        subcategoria.setNombre(dto.nombre());
+        return toResponse(subcategoriaRepository.save(subcategoria));
     }
 
     @Transactional
@@ -55,5 +62,13 @@ public class SubcategoriaService {
         subcategoriaRepository.findById(subcategoriaId)
                 .orElseThrow(() -> new SubcategoriaNoEncontradaException());
         subcategoriaRepository.deleteById(subcategoriaId);
+    }
+
+    private SubcategoriaResponseDTO toResponse(Subcategoria subcategoria) {
+        return new SubcategoriaResponseDTO(
+                subcategoria.getId(),
+                subcategoria.getNombre(),
+                subcategoria.getCategoria() != null ? subcategoria.getCategoria().getId() : null
+        );
     }
 }

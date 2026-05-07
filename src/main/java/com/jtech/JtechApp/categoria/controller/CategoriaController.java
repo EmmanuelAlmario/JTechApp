@@ -1,7 +1,9 @@
 package com.jtech.JtechApp.categoria.controller;
 
-import com.jtech.JtechApp.categoria.entity.Categoria;
-import com.jtech.JtechApp.categoria.entity.Subcategoria;
+import com.jtech.JtechApp.categoria.dto.request.CreateCategoriaRequestDTO;
+import com.jtech.JtechApp.categoria.dto.request.UpdateCategoriaRequestDTO;
+import com.jtech.JtechApp.categoria.dto.response.CategoriaResponseDTO;
+import com.jtech.JtechApp.categoria.dto.response.SubcategoriaResponseDTO;
 import com.jtech.JtechApp.categoria.service.CategoriaService;
 import com.jtech.JtechApp.categoria.service.SubcategoriaService;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/categorias")
@@ -21,29 +22,29 @@ public class CategoriaController {
     private final SubcategoriaService subcategoriaService;
 
     @GetMapping
-    public ResponseEntity<List<Categoria>> findAll() {
+    public ResponseEntity<List<CategoriaResponseDTO>> findAll() {
         return ResponseEntity.ok(categoriaService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria> findById(@PathVariable Long id) {
+    public ResponseEntity<CategoriaResponseDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(categoriaService.findById(id));
     }
 
     @GetMapping("/{id}/subcategorias")
-    public ResponseEntity<List<Subcategoria>> findSubcategorias(@PathVariable Long id) {
+    public ResponseEntity<List<SubcategoriaResponseDTO>> findSubcategorias(@PathVariable Long id) {
         return ResponseEntity.ok(subcategoriaService.findByCategoria(id));
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> save(@RequestBody Categoria categoria) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(categoriaService.save(categoria));
+    public ResponseEntity<CategoriaResponseDTO> save(@RequestBody CreateCategoriaRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoriaService.save(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Categoria> update(@PathVariable Long id, @RequestBody Categoria categoria) {
-        return ResponseEntity.ok(categoriaService.update(id, categoria));
+    public ResponseEntity<CategoriaResponseDTO> update(@PathVariable Long id,
+                                                       @RequestBody UpdateCategoriaRequestDTO dto) {
+        return ResponseEntity.ok(categoriaService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")

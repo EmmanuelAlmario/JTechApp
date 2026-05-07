@@ -38,6 +38,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
+    @ExceptionHandler(VarianteProductoNoEncontradaException.class)
+    public ResponseEntity<String> handleVarianteProductoNoEncontrada(VarianteProductoNoEncontradaException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+
     @ExceptionHandler(OrdenNoEncontradaException.class)
     public ResponseEntity<String> handleOrdenNoEncontrada(OrdenNoEncontradaException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -55,6 +60,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UsuarioNoEncontradoException.class)
     public ResponseEntity<String> handleUsuarioNoEncontrado(UsuarioNoEncontradoException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+
+    @ExceptionHandler(ClienteNoEncontradoException.class)
+    public ResponseEntity<String> handleClienteNoEncontrado(ClienteNoEncontradoException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 

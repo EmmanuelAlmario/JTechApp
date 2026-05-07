@@ -1,11 +1,16 @@
 package com.jtech.JtechApp.usuario.service;
 
+import com.jtech.JtechApp.usuario.dto.request.RegisterAdministradorRequestDTO;
+import com.jtech.JtechApp.usuario.dto.request.RegisterClienteRequestDTO;
+import com.jtech.JtechApp.usuario.dto.request.UpdateUsuarioRequestDTO;
+import com.jtech.JtechApp.usuario.dto.response.AdministradorResponseDTO;
+import com.jtech.JtechApp.usuario.dto.response.ClienteResponseDTO;
+import com.jtech.JtechApp.usuario.dto.response.UsuarioResponseDTO;
 import com.jtech.JtechApp.usuario.entity.Administrador;
 import com.jtech.JtechApp.usuario.entity.Cliente;
 import com.jtech.JtechApp.usuario.entity.Usuario;
 import com.jtech.JtechApp.usuario.enums.NivelAdmin;
 import com.jtech.JtechApp.usuario.exception.EmailExistenteException;
-import com.jtech.JtechApp.usuario.exception.EmailNoEncontradoException;
 import com.jtech.JtechApp.usuario.exception.UsuarioNoEncontradoException;
 import com.jtech.JtechApp.usuario.repository.AdministradorRepository;
 import com.jtech.JtechApp.usuario.repository.ClienteRepository;
@@ -26,58 +31,104 @@ public class UsuarioService {
     private final AdministradorRepository administradorRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public List<Usuario> findAll() {
-        return usuarioRepository.findAll();
+    public List<UsuarioResponseDTO> findAll() {
+        return usuarioRepository.findAll().stream()
+                .map(this::toUsuarioResponse)
+                .toList();
     }
 
-    public Usuario findById(Long usuarioId) {
-        return usuarioRepository.findById(usuarioId)
+    public UsuarioResponseDTO findById(Long usuarioId) {
+        return toUsuarioResponse(usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new UsuarioNoEncontradoException()));
+    }
+
+    public List<AdministradorResponseDTO> findAllAdministradores() {
+        return administradorRepository.findAll().stream()
+                .map(this::toAdministradorResponse)
+                .toList();
+    }
+
+    public List<AdministradorResponseDTO> findByNivel(NivelAdmin nivel) {
+        return administradorRepository.findByNivel(nivel).stream()
+                .map(this::toAdministradorResponse)
+                .toList();
+    }
+
+    @Transactional
+    public ClienteResponseDTO registrarCliente(RegisterClienteRequestDTO dto) {
+        if (usuarioRepository.existsByEmail(dto.email())) {
+            throw new EmailExistenteException();
+        }
+        Cliente cliente = new Cliente();
+        cliente.setNombre(dto.nombre());
+        cliente.setEmail(dto.email());
+        cliente.setPassword(passwordEncoder.encode(dto.password()));
+        cliente.setTelefono(dto.telefono());
+        cliente.setDireccion(dto.direccion());
+        return toClienteResponse(clienteRepository.save(cliente));
+    }
+
+    @Transactional
+    public AdministradorResponseDTO registrarAdministrador(RegisterAdministradorRequestDTO dto) {
+        if (usuarioRepository.existsByEmail(dto.email())) {
+            throw new EmailExistenteException();
+        }
+        Administrador administrador = new Administrador();
+        administrador.setNombre(dto.nombre());
+        administrador.setEmail(dto.email());
+        administrador.setPassword(passwordEncoder.encode(dto.password()));
+        administrador.setCargo(dto.cargo());
+        administrador.setNivel(dto.nivel() != null ? dto.nivel() : NivelAdmin.ADMIN);
+        return toAdministradorResponse(administradorRepository.save(administrador));
+    }
+
+    @Transactional
+    public UsuarioResponseDTO update(Long usuarioId, UpdateUsuarioRequestDTO dto) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new UsuarioNoEncontradoException());
-    }
-
-    public Usuario findByEmail(String email) {
-        return usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new EmailNoEncontradoException());
-    }
-
-    @Transactional
-    public Cliente registrarCliente(Cliente cliente) {
-        if (usuarioRepository.existsByEmail(cliente.getEmail())) {
-            throw new EmailExistenteException();
-        }
-        cliente.setPassword(passwordEncoder.encode(cliente.getPassword()));
-        return clienteRepository.save(cliente);
-    }
-
-    @Transactional
-    public Administrador registrarAdministrador(Administrador administrador) {
-        if (usuarioRepository.existsByEmail(administrador.getEmail())) {
-            throw new EmailExistenteException();
-        }
-        administrador.setPassword(passwordEncoder.encode(administrador.getPassword()));
-        return administradorRepository.save(administrador);
-    }
-
-    public List<Administrador> findByNivel(NivelAdmin nivel) {
-        return administradorRepository.findByNivel(nivel);
-    }
-
-    public List<Administrador> findAllAdministradores() {
-        return administradorRepository.findAll();
-    }
-
-    @Transactional
-    public Usuario update(Long usuarioId, Usuario usuarioActualizado) {
-        Usuario usuario = findById(usuarioId);
-        usuario.setNombre(usuarioActualizado.getNombre());
-        usuario.setEmail(usuarioActualizado.getEmail());
-        return usuarioRepository.save(usuario);
+        usuario.setNombre(dto.nombre());
+        usuario.setEmail(dto.email());
+        return toUsuarioResponse(usuarioRepository.save(usuario));
     }
 
     @Transactional
     public void toggleActivo(Long usuarioId) {
-        Usuario usuario = findById(usuarioId);
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new UsuarioNoEncontradoException());
         usuario.setActivo(!usuario.getActivo());
         usuarioRepository.save(usuario);
+    }
+
+    private UsuarioResponseDTO toUsuarioResponse(Usuario usuario) {
+        return new UsuarioResponseDTO(
+                usuario.getId(),
+                usuario.getNombre(),
+                usuario.getEmail(),
+                usuario.getActivo(),
+                usuario.getRol()
+        );
+    }
+
+    private ClienteResponseDTO toClienteResponse(Cliente cliente) {
+        return new ClienteResponseDTO(
+                cliente.getId(),
+                cliente.getNombre(),
+                cliente.getEmail(),
+                cliente.getActivo(),
+                cliente.getTelefono(),
+                cliente.getDireccion()
+        );
+    }
+
+    private AdministradorResponseDTO toAdministradorResponse(Administrador administrador) {
+        return new AdministradorResponseDTO(
+                administrador.getId(),
+                administrador.getNombre(),
+                administrador.getEmail(),
+                administrador.getActivo(),
+                administrador.getRol(),
+                administrador.getCargo(),
+                administrador.getNivel()
+        );
     }
 }
