@@ -1,5 +1,7 @@
 package com.jtech.JtechApp.usuario.controller;
 
+import com.jtech.JtechApp.dto.request.LoginRequestDTO;
+import com.jtech.JtechApp.dto.response.AuthResponseDTO;
 import com.jtech.JtechApp.security.JwtUtil;
 import com.jtech.JtechApp.usuario.entity.Usuario;
 import com.jtech.JtechApp.usuario.repository.UsuarioRepository;
@@ -10,33 +12,21 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
-
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
     private final UsuarioRepository usuarioRepository;
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> request) {
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginRequestDTO request) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.get("email"),
-                        request.get("password")
-                )
+                new UsernamePasswordAuthenticationToken(request.email(), request.password())
         );
-
-        Usuario usuario = usuarioRepository.findByEmail(request.get("email")).get();
+        Usuario usuario = usuarioRepository.findByEmail(request.email()).get();
         String token = jwtUtil.generateToken(usuario.getEmail(), usuario.getRol());
-
-        return ResponseEntity.ok(Map.of(
-                "token", token,
-                "rol", usuario.getRol(),
-                "nombre", usuario.getNombre()
-        ));
+        return ResponseEntity.ok(new AuthResponseDTO(token, usuario.getRol(), usuario.getNombre()));
     }
 }
