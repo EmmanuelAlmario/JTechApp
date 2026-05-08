@@ -18,13 +18,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-
     private final JwtFilter jwtFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
@@ -38,14 +36,16 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
-                        .requestMatchers("/mis-ordenes", "/ordenes").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.GET, "/mis-ordenes").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.POST, "/ordenes").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.GET, "/ordenes").hasAnyRole("ADMIN", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/ordenes/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
                         .requestMatchers("/dashboard/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
-                        .requestMatchers("/administradores/**").hasRole("ADMIN")
+                        .requestMatchers("/administradores/**").hasRole("SUPER_ADMIN")
                         .anyRequest().hasAnyRole("ADMIN", "SUPER_ADMIN")
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()));
-
         return http.build();
     }
 
