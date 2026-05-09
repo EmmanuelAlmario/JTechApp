@@ -73,11 +73,11 @@ public class OrdenService {
             DetalleOrden detalle = new DetalleOrden();
             detalle.setVarianteProducto(variante);
             detalle.setCantidad(d.cantidad());
-            detalle.setPrecioUnitario(d.precioUnitario());
+            detalle.setPrecioUnitario(variante.getPrecio());
             detalle.setOrden(orden);
             detalles.add(detalle);
 
-            total = total.add(d.precioUnitario().multiply(BigDecimal.valueOf(d.cantidad())));
+            total = total.add(variante.getPrecio().multiply(BigDecimal.valueOf(d.cantidad())));
         }
 
         orden.setDetallesOrden(detalles);

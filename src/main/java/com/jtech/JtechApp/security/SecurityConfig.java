@@ -32,6 +32,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.GET,
                                 "/productos", "/productos/{id}",
                                 "/productos/buscar", "/productos/filtrar",
@@ -43,7 +44,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/mis-ordenes").hasRole("CLIENTE")
-                        .requestMatchers(HttpMethod.POST, "/ordenes").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.GET, "/metodos-pago", "/metodos-pago/{id}").permitAll()                        .requestMatchers(HttpMethod.POST, "/ordenes").hasRole("CLIENTE")
                         .requestMatchers(HttpMethod.GET, "/ordenes").hasAnyRole("ADMIN", "SUPER_ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/ordenes/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
                         .requestMatchers("/dashboard/**").hasAnyRole("ADMIN", "SUPER_ADMIN")

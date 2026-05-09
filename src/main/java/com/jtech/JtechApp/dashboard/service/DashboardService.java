@@ -26,6 +26,12 @@ public class DashboardService {
         stats.put("totalProductos", productoRepository.count());
         stats.put("totalClientes", usuarioRepository.count());
         stats.put("ordenesPendientes", ordenRepository.findByEstado(EstadoOrden.PENDIENTE).size());
+        stats.put("productos", productoRepository.findAll().stream()
+                .map(p -> Map.of("id", p.getId(), "nombre", p.getNombre(), "activo", p.getActivo()))
+                .toList());
+        stats.put("usuarios", usuarioRepository.findAll().stream()
+                .map(u -> Map.of("id", u.getId(), "nombre", u.getNombre(), "rol", u.getRol(), "activo", u.getActivo()))
+                .toList());
         return stats;
     }
 
