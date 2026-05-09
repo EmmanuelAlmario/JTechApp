@@ -62,35 +62,153 @@ Backend (Spring Boot)
 Base de datos (H2 File)
 ```
 
-### Estructura del Backend
+## Estructura del Backend
 
 ```
-com.jtech.JtechApp
+src/main/java/com/jtech/JtechApp/
+├── config/
+│   └── DataSeeder.java
+├── security/
+│   ├── JwtUtil.java
+│   ├── JwtFilter.java
+│   ├── SecurityConfig.java
+│   └── UserDetailsServiceImpl.java
+├── exception/
+│   └── GlobalExceptionHandler.java
 ├── categoria/
-|   ├── exception/
 │   ├── entity/
+│   │   ├── Categoria.java
+│   │   └── Subcategoria.java
+│   ├── dto/
+│   │   ├── request/
+│   │   │   ├── CreateCategoriaRequestDTO.java
+│   │   │   ├── UpdateCategoriaRequestDTO.java
+│   │   │   └── UpdateSubcategoriaRequestDTO.java
+│   │   └── response/
+│   │       ├── CategoriaResponseDTO.java
+│   │       └── SubcategoriaResponseDTO.java
 │   ├── repository/
-│   └── service/
-├── orden/
-|   ├── exception/
-│   ├── entity/
-│   ├── repository/
-│   └── service/
-├── pago/
-|   ├── exception/
-│   ├── entity/
-│   ├── repository/
-│   └── service/
+│   │   ├── CategoriaRepository.java
+│   │   └── SubcategoriaRepository.java
+│   ├── service/
+│   │   ├── CategoriaService.java
+│   │   └── SubcategoriaService.java
+│   ├── controller/
+│   │   ├── CategoriaController.java
+│   │   └── SubcategoriaController.java
+│   └── exception/
+│       ├── CategoriaExistenteException.java
+│       ├── CategoriaNoEncontradaException.java
+│       ├── NombreCategoriaExistenteException.java
+│       └── SubcategoriaNoEncontradaException.java
 ├── producto/
-|   ├── exception/
 │   ├── entity/
+│   │   ├── Marca.java
+│   │   ├── Producto.java
+│   │   ├── ImagenProducto.java
+│   │   └── VarianteProducto.java
+│   ├── dto/
+│   │   ├── request/
+│   │   │   ├── CreateMarcaRequestDTO.java
+│   │   │   ├── UpdateMarcaRequestDTO.java
+│   │   │   ├── CreateProductoRequestDTO.java
+│   │   │   ├── UpdateProductoRequestDTO.java
+│   │   │   ├── CreateImagenProductoRequestDTO.java
+│   │   │   └── CreateVarianteProductoRequestDTO.java
+│   │   └── response/
+│   │       ├── MarcaResponseDTO.java
+│   │       ├── ProductoResponseDTO.java
+│   │       ├── ImagenProductoResponseDTO.java
+│   │       └── VarianteProductoResponseDTO.java
 │   ├── repository/
-│   └── service/
-└── usuario/
-    ├── exception/
-    ├── entity/
-    ├── repository/
-    └── service/
+│   │   ├── MarcaRepository.java
+│   │   ├── ProductoRepository.java
+│   │   ├── ImagenProductoRepository.java
+│   │   └── VarianteProductoRepository.java
+│   ├── service/
+│   │   ├── MarcaService.java
+│   │   └── ProductoService.java
+│   ├── controller/
+│   │   ├── MarcaController.java
+│   │   └── ProductoController.java
+│   └── exception/
+│       ├── MarcaNoEncontradaException.java
+│       ├── NombreMarcaExistenteException.java
+│       └── ProductoNoEncontradoException.java
+├── orden/
+│   ├── entity/
+│   │   ├── Orden.java
+│   │   └── DetalleOrden.java
+│   ├── enums/
+│   │   └── EstadoOrden.java
+│   ├── dto/
+│   │   ├── request/
+│   │   │   ├── CreateOrdenRequestDTO.java
+│   │   │   └── CreateDetalleOrdenRequestDTO.java
+│   │   └── response/
+│   │       ├── OrdenResponseDTO.java
+│   │       └── DetalleOrdenResponseDTO.java
+│   ├── repository/
+│   │   ├── OrdenRepository.java
+│   │   └── DetalleOrdenRepository.java
+│   ├── service/
+│   │   └── OrdenService.java
+│   ├── controller/
+│   │   └── OrdenController.java
+│   └── exception/
+│       ├── OrdenNoEncontradaException.java
+│       └── VarianteProductoNoEncontradaException.java
+├── pago/
+│   ├── entity/
+│   │   ├── MetodoPago.java
+│   │   ├── PagoEfectivo.java
+│   │   ├── PagoTarjetaCredito.java
+│   │   └── PagoTarjetaDebito.java
+│   ├── repository/
+│   │   └── MetodoPagoRepository.java
+│   ├── service/
+│   │   └── MetodoPagoService.java
+│   ├── controller/
+│   │   └── MetodoPagoController.java
+│   └── exception/
+│       └── MetodoPagoNoEncontradoException.java
+├── usuario/
+│   ├── entity/
+│   │   ├── Usuario.java
+│   │   ├── Cliente.java
+│   │   └── Administrador.java
+│   ├── enums/
+│   │   └── NivelAdmin.java
+│   ├── dto/
+│   │   ├── request/
+│   │   │   ├── LoginRequestDTO.java
+│   │   │   ├── RegisterClienteRequestDTO.java
+│   │   │   ├── RegisterAdministradorRequestDTO.java
+│   │   │   └── UpdateUsuarioRequestDTO.java
+│   │   └── response/
+│   │       ├── AuthResponseDTO.java
+│   │       ├── ClienteResponseDTO.java
+│   │       ├── AdministradorResponseDTO.java
+│   │       └── UsuarioResponseDTO.java
+│   ├── repository/
+│   │   ├── UsuarioRepository.java
+│   │   ├── ClienteRepository.java
+│   │   └── AdministradorRepository.java
+│   ├── service/
+│   │   └── UsuarioService.java
+│   ├── controller/
+│   │   ├── AuthController.java
+│   │   └── UsuarioController.java
+│   └── exception/
+│       ├── EmailExistenteException.java
+│       ├── EmailNoEncontradoException.java
+│       ├── ClienteNoEncontradoException.java
+│       └── UsuarioNoEncontradoException.java
+└── dashboard/
+    ├── service/
+    │   └── DashboardService.java
+    └── controller/
+        └── DashboardController.java
 ```
 
 ---
@@ -232,7 +350,6 @@ cd backend
 mvn spring-boot:run
 ```
 
-La base de datos H2 se crea automaticamente en `data/jtechdb`.
 Consola H2 disponible en: `http://localhost:8080/h2-console`
 
 ### Frontend
@@ -257,15 +374,17 @@ documentation/
 
 ## Diseño
 - Estetica limpia y minimalista inspirada en Apple Store
-- Paleta de colores: por definir
+- Paleta de colores: Blanco y negro.
 - Componentes animados con React Bits
 
 ---
 
 ## Equipo
 
-| Nombre | Programa | Rol | Seccion (Clase) |
-|---|---|---|---|
-| Emmanuel Almario | Desarrollo de Software - 3er semestre | Desarrollador | 1604 |
+| Nombre | Programa | Rol | GitHub | @Seccion (Clase) |
+|---|---|---|---|---|
+| Emmanuel Almario | Desarrollo de Software - 3er semestre | Desarrollador | @EmmanuelAlmario | 1604 |
+| Karluis Martinez | Desarrollo de Software - 3er semestre | Desarrollador | @karluismartinezvega25-ops | 1604 |
+
 
 ---
