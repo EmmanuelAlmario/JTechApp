@@ -1,4 +1,4 @@
-package com.jtech.JtechApp.exceptionhandler;
+package com.jtech.JtechApp.exception;
 
 import com.jtech.JtechApp.categoria.exception.*;
 import com.jtech.JtechApp.usuario.exception.*;

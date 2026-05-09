@@ -2,6 +2,7 @@ package com.jtech.JtechApp.categoria.controller;
 
 import com.jtech.JtechApp.categoria.dto.request.CreateCategoriaRequestDTO;
 import com.jtech.JtechApp.categoria.dto.request.UpdateCategoriaRequestDTO;
+import com.jtech.JtechApp.categoria.dto.request.UpdateSubcategoriaRequestDTO;
 import com.jtech.JtechApp.categoria.dto.response.CategoriaResponseDTO;
 import com.jtech.JtechApp.categoria.dto.response.SubcategoriaResponseDTO;
 import com.jtech.JtechApp.categoria.service.CategoriaService;
@@ -34,6 +35,13 @@ public class CategoriaController {
     @GetMapping("/{id}/subcategorias")
     public ResponseEntity<List<SubcategoriaResponseDTO>> findSubcategorias(@PathVariable Long id) {
         return ResponseEntity.ok(subcategoriaService.findByCategoria(id));
+    }
+
+    @PostMapping("/{id}/subcategorias")
+    public ResponseEntity<SubcategoriaResponseDTO> saveSubcategoria(@PathVariable Long id,
+                                                                    @RequestBody UpdateSubcategoriaRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(subcategoriaService.save(id, dto));
     }
 
     @PostMapping
