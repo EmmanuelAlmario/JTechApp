@@ -6,6 +6,7 @@ skinparam actorStyle awesome
 
 actor "Cliente" as C
 actor "Administrador" as A
+actor "Super Administrador" as SA
 
 rectangle "JTech - Sistema de Ecommerce" {
 
@@ -63,7 +64,7 @@ rectangle "JTech - Sistema de Ecommerce" {
     usecase "CU27 - Desactivar administrador" as CU27
   }
 }
-
+A <|-- SA
 C --> CU01
 C --> CU02
 C --> CU03
@@ -91,7 +92,7 @@ A --> CU22
 A --> CU23
 A --> CU24
 A --> CU25
-A --> CU26
-A --> CU27
+SA --> CU26
+SA --> CU27
 
 @enduml
