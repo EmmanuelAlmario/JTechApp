@@ -34,10 +34,10 @@ cuentan con un panel completo para gestionar productos, categorias, marcas y ord
 | Spring Security | - | Autenticacion y autorizacion |
 | JWT | 0.12.3 | Tokens de autenticacion |
 | Hibernate | - | ORM |
-| H2 File | - | Base de datos con persistencia |
+| PostgreSQL | 18.3 | Base de datos con persistencia |
 | Lombok | - | Reduccion de boilerplate |
 | Bean Validation | - | Validacion de datos |
-| Maven | - | Gestion de dependencias |
+| Maven | 3.8 | Gestion de dependencias |
 
 ### Frontend
 
