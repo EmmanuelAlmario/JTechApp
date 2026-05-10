@@ -70,6 +70,14 @@ public class OrdenService {
             VarianteProducto variante = varianteProductoRepository.findById(d.varianteProductoId())
                     .orElseThrow(() -> new VarianteProductoNoEncontradaException());
 
+            if (variante.getStock() < d.cantidad()) {
+                throw new RuntimeException("Stock insuficiente para: " + variante.getNombre()
+                        + ". Stock disponible: " + variante.getStock());
+            }
+
+            variante.setStock(variante.getStock() - d.cantidad());
+            varianteProductoRepository.save(variante);
+
             DetalleOrden detalle = new DetalleOrden();
             detalle.setVarianteProducto(variante);
             detalle.setCantidad(d.cantidad());
